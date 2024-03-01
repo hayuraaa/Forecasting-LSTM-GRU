@@ -60,6 +60,11 @@ def main():
     epochs = st.sidebar.selectbox("Select Number of Epochs:", [50, 100, 150], index=1)
     batch_size = st.sidebar.selectbox("Select Batch Size:", [32, 64, 128], index=1)
 
+
+    # Tombol button untuk melanjutkan setelah input selesai
+if st.sidebar.button("Apply Hyperparameters", key='apply_button'):
+    # Lakukan proses atau tampilkan informasi setelah tombol ditekan
+    st.sidebar.text("Applying hyperparameters...")
     # Hyperparameter search space
     space = {
         'units': units,
