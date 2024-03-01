@@ -62,43 +62,43 @@ def main():
 
 
     # Tombol button untuk melanjutkan setelah input selesai
-if st.sidebar.button("Apply Hyperparameters", key='apply_button'):
-    # Lakukan proses atau tampilkan informasi setelah tombol ditekan
-    st.sidebar.text("Applying hyperparameters...")
-    # Hyperparameter search space
-    space = {
-        'units': units,
-        'dropout_rate': dropout_rate,
-        'learning_rate': np.exp(learning_rate),
-        'epochs': epochs,
-        'batch_size': batch_size
-    }
+    if st.sidebar.button("Apply Hyperparameters", key='apply_button'):
+        # Lakukan proses atau tampilkan informasi setelah tombol ditekan
+        st.sidebar.text("Applying hyperparameters...")
+        # Hyperparameter search space
+        space = {
+            'units': units,
+            'dropout_rate': dropout_rate,
+            'learning_rate': np.exp(learning_rate),
+            'epochs': epochs,
+            'batch_size': batch_size
+        }
 
-    # Define early stopping callback
-    early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
-
-    # Run hyperparameter optimization
-    best_params_lstm, history_lstm, y_pred_lstm, y_test_orig_lstm = run_optimization(space, 'lstm', X_train_lstm, y_train, X_test_lstm, y_test, scaler, early_stopping)
-    best_params_gru, history_gru, y_pred_gru, y_test_orig_gru = run_optimization(space, 'gru', X_train_gru, y_train, X_test_gru, y_test, scaler, early_stopping)
-
-    # Display results
-    st.header("Results for LSTM Model")
-    display_results(best_params_lstm, history_lstm, y_test_orig_lstm, y_pred_lstm)
-
-    st.header("Results for GRU Model")
-    display_results(best_params_gru, history_gru, y_test_orig_gru, y_pred_gru)
-
-    # Visualize predictions for the final LSTM model
-    st.header("Visualize Predictions (LSTM)")
-    visualize_predictions(data, train_size, n_steps, y_test_orig_lstm, y_pred_lstm)
-
-    # Visualize predictions for the final GRU model
-    st.header("Visualize Predictions (GRU)")
-    visualize_predictions(data, train_size, n_steps, y_test_orig_gru, y_pred_gru)
-
-    # Plot training history using Matplotlib
-    st.header("Training History")
-    plot_training_history(history_lstm, history_gru)
+        # Define early stopping callback
+        early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+    
+        # Run hyperparameter optimization
+        best_params_lstm, history_lstm, y_pred_lstm, y_test_orig_lstm = run_optimization(space, 'lstm', X_train_lstm, y_train, X_test_lstm, y_test, scaler, early_stopping)
+        best_params_gru, history_gru, y_pred_gru, y_test_orig_gru = run_optimization(space, 'gru', X_train_gru, y_train, X_test_gru, y_test, scaler, early_stopping)
+    
+        # Display results
+        st.header("Results for LSTM Model")
+        display_results(best_params_lstm, history_lstm, y_test_orig_lstm, y_pred_lstm)
+    
+        st.header("Results for GRU Model")
+        display_results(best_params_gru, history_gru, y_test_orig_gru, y_pred_gru)
+    
+        # Visualize predictions for the final LSTM model
+        st.header("Visualize Predictions (LSTM)")
+        visualize_predictions(data, train_size, n_steps, y_test_orig_lstm, y_pred_lstm)
+    
+        # Visualize predictions for the final GRU model
+        st.header("Visualize Predictions (GRU)")
+        visualize_predictions(data, train_size, n_steps, y_test_orig_gru, y_pred_gru)
+    
+        # Plot training history using Matplotlib
+        st.header("Training History")
+        plot_training_history(history_lstm, history_gru)
 
 
 def prepare_data(data, n_steps):
