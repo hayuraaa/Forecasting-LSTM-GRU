@@ -26,7 +26,7 @@ def main():
     st.write("Silahkan masukkan parameter")
 
     # Download stock price data
-    st.sidebar.header("Data Download")
+    st.header("Data Download")
     stock_symbol = st.text_input("Enter Stock Symbol (e.g., STACKS-USD.JK):", "STX4847-USD")
     start_date = st.date_input("Start Date", pd.to_datetime("2021-01-01"))
     end_date = st.date_input("End Date", pd.to_datetime("2023-01-01"))
