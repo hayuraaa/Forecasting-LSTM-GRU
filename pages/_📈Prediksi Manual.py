@@ -39,7 +39,7 @@ def main():
     scaled_data = scaler.fit_transform(close_prices)
 
     # Data preparation
-    n_steps = st.sidebar.slider("Select Number of Time Steps:", min_value=10, max_value=300, value=120, step=10)
+    n_steps = st.slider("Select Number of Time Steps:", min_value=10, max_value=300, value=120, step=10)
     X, y = prepare_data(scaled_data, n_steps)
 
     # Splitting into train and test sets
@@ -63,7 +63,7 @@ def main():
 
 
     # Tombol button untuk melanjutkan setelah input selesai
-    if st.sidebar.button("Apply Hyperparameters", key='apply_button'):
+    if st.button("Apply Hyperparameters", key='apply_button'):
         # Lakukan proses atau tampilkan informasi setelah tombol ditekan
         st.sidebar.text("Applying hyperparameters...")
         # Hyperparameter search space
