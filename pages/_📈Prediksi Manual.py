@@ -23,12 +23,13 @@ simplefilter(action='ignore', category=DeprecationWarning)
 # Streamlit app
 def main():
     st.title("Stock Price Prediction App")
+    st.write("Silahkan masukkan parameter")
 
     # Download stock price data
     st.sidebar.header("Data Download")
-    stock_symbol = st.sidebar.text_input("Enter Stock Symbol (e.g., STACKS-USD.JK):", "STX4847-USD")
-    start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2021-01-01"))
-    end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
+    stock_symbol = st.text_input("Enter Stock Symbol (e.g., STACKS-USD.JK):", "STX4847-USD")
+    start_date = st.date_input("Start Date", pd.to_datetime("2021-01-01"))
+    end_date = st.date_input("End Date", pd.to_datetime("2023-01-01"))
 
     data = yf.download(stock_symbol, start=start_date, end=end_date)
 
@@ -53,12 +54,12 @@ def main():
     X_test_gru = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
 
     # Sidebar for hyperparameter tuning
-    st.sidebar.header("Hyperparameter Tuning")
-    units = st.sidebar.selectbox("Select Number of Units:", [50, 100, 150], index=1)
-    dropout_rate = st.sidebar.slider("Select Dropout Rate:", min_value=0.2, max_value=0.5, value=0.4, step=0.01)
-    learning_rate = st.sidebar.slider("Select Learning Rate:", np.log(0.001), np.log(0.01), value=np.log(0.005), step=0.001)
-    epochs = st.sidebar.selectbox("Select Number of Epochs:", [50, 100, 150], index=1)
-    batch_size = st.sidebar.selectbox("Select Batch Size:", [32, 64, 128], index=1)
+    st.header("Hyperparameter Tuning")
+    units = st.selectbox("Select Number of Units:", [50, 100, 150], index=1)
+    dropout_rate = st.slider("Select Dropout Rate:", min_value=0.2, max_value=0.5, value=0.4, step=0.01)
+    learning_rate = st.slider("Select Learning Rate:", np.log(0.001), np.log(0.01), value=np.log(0.005), step=0.001)
+    epochs = st.selectbox("Select Number of Epochs:", [50, 100, 150], index=1)
+    batch_size = st.selectbox("Select Batch Size:", [32, 64, 128], index=1)
 
 
     # Tombol button untuk melanjutkan setelah input selesai
