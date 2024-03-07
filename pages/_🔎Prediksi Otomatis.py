@@ -18,7 +18,7 @@ from datetime import timedelta
 # Streamlit app
 def main():
     st.title("Prediksi Crypto Metaverse")
-    st.write("Sistem Prediksi menggunakan Algoritma Long Short Term Memory dan Gated Recurrent Unit, sistem ini diharapkan dapat menjadi landasan untuk strategi perdagangan yang lebih cerdas dan keputusan investasi yang lebih baik dalam ekosistem cryptocurrency.")
+    st.write("Sistem Prediksi menggunakan Algoritma Long Short Term Memory dan Gated Recurrent Unit, sistem ini sudah melakukan pelatihan model sehingga user bisa melakukan prediksi dengan cepat, model dilatih dengan hasil dan parameter yang terbaik.")
     # Sidebar Input Data
     #--------------------#
     st.sidebar.header("Data Download")
