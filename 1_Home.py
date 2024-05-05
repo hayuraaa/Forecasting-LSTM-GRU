@@ -9,7 +9,7 @@ def main():
     
 
     # Dataframe selection
-    st.markdown("<h1 align='center'> <b> Sistem Prediksi Cryptocurrency Ekosistem Metaverse", unsafe_allow_html=True)
+    st.markdown("<h1 align='center'> <b> Web Prediksi Cryptocurrency Ekosistem Metaverse", unsafe_allow_html=True)
     new_line(1)
     st.markdown("Selamat datang! Sebuah aplikasi prediksi yang intuitif dan kuat yang dirancang untuk menyederhanakan proses membangun dan mengevaluasi model pembelajaran mesin. Sistem Prediksi ini menggunakan Algoritma Long Short Term Memory dan Gated Recurrent Unit, sistem ini diharapkan dapat menjadi landasan untuk strategi perdagangan yang lebih cerdas dan keputusan investasi yang lebih baik dalam cryptocurrency.", unsafe_allow_html=True)
     
