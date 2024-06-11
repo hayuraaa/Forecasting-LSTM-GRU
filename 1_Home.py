@@ -9,7 +9,7 @@ def main():
     
 
     # Dataframe selection
-    st.markdown("<h1 align='center'> <b> Sistem blalalala Prediksi Cryptocurrency Ekosistem Metaverse", unsafe_allow_html=True)
+    st.markdown("<h1 align='center'> <b> Sistem Prediksi Cryptocurrency Ekosistem Metaverse", unsafe_allow_html=True)
     new_line(1)
     st.markdown("Selamat datang! Sebuah aplikasi prediksi yang intuitif dan kuat yang dirancang untuk menyederhanakan proses membangun dan mengevaluasi model pembelajaran mesin. Sistem Prediksi ini menggunakan Algoritma Long Short Term Memory dan Gated Recurrent Unit, sistem ini diharapkan dapat menjadi landasan untuk strategi perdagangan yang lebih cerdas dan keputusan investasi yang lebih baik dalam cryptocurrency.", unsafe_allow_html=True)
     
@@ -31,22 +31,24 @@ def main():
     - **🧠 Building Machine Learning Models**: Model yang digunakan pada aplikasi ini adalah Long Short Term Memory dan Gated Recurrent Unit. Dalam konteks deep learning, LSTM dan GRU adalah salah satu arsitektur dari RNN yang sering digunakan <br> <br>
     - **⚖️ Evaluating Machine Learning Models**: proses mengevaluasi model prediksi dengan menggunakan metrik seperti Mean Absolute Percentage Error  (MAPE), Mean Squared Error (MSE) dan Root Mean Squared Error (RMSE). <br> <br>
     """, unsafe_allow_html=True)
-
+    
     st.markdown("""
     Pada bagian membangun model user memasukkan nilai masing masing hyperparameter.Hiperparameter adalah variabel yang secara signifikan mempengaruhi proses pelatihan model:
     
-    - **⏱ Time Seps**: adalah parameter berupa nilai integer yang menentukan berapa banyak dataset latih yang digunakan untuk memprediksi harga kripto kedepannya. <br> <br>
-    - **🧾 Units**: adalah sebuah nilai integer yang menentukan berapa banyak layer atau lapisan LSTM dan GRU yang dibangun dan digunakan didalam jaringan saraf. <br> <br>
+    - **⏱ Time Seps**: Adalah parameter berupa nilai integer yang menentukan berapa banyak dataset latih yang digunakan untuk memprediksi harga kripto kedepannya. <br> <br>
+    - **🧾 Units**: Adalah sebuah nilai integer yang menentukan berapa banyak layer atau lapisan LSTM dan GRU yang dibangun dan digunakan didalam jaringan saraf. <br> <br>
     - **💣 Dropout**: Adalah sebuah teknik untuk menonaktifkan beberapa fungsi pada cell untuk mencegah terjadinya overfitting. <br> <br>
     - **📚 Learning Rate**: proses mengatur seberapa besar langkah perubahan bobot yang dilakukan selama proses pembelajaran. <br> <br>
-    - **📠 Epochs**: adalah hyperparameter yang menggunakan nilai integer yang menentukan jumlah berapa kali program akan bekerja mengolah seluruh dataset latih <br> <br>
+    - **📠 Epochs**: Adalah hyperparameter yang menggunakan nilai integer yang menentukan jumlah berapa kali program akan bekerja mengolah seluruh dataset latih <br> <br>
     - **🧠 Batch Size**: proses Adalah suatu nilai integer yang menentukan berapa banyak sampel yang diproses di dalam jaringan saraf atau neural network dalam satu waktu. <br> <br>
     """, unsafe_allow_html=True)
     new_line()
     
+    
     # Source Code
+    new_line()
     st.header("📂 Source Code")
-    st.markdown("Untuk pengembangan aplikasi ini, sourcecode tersedia di [**GitHub**](https://github.com/hayuraaa/Forecast-LSTM-GRU.git). Jangan ragu untuk berkontribusi, memberikan feedback, atau menyesuaikan aplikasi agar sesuai dengan kebutuhan Anda.", unsafe_allow_html=True)
+    st.markdown("Untuk pengembangan aplikasi ini, sourcecode tersedia di [**GitHub**](https://github.com/hayuraaa/Forecasting-LSTM-GRU.git). Jangan ragu untuk berkontribusi, memberikan feedback, atau menyesuaikan aplikasi agar sesuai dengan kebutuhan Anda.", unsafe_allow_html=True)
     new_line()
     
     # Contributors
