@@ -4,7 +4,7 @@ NumPy
 Pandas
 Matplotlib
 Scikit-Learn
-TensorFlow
+TensorFlow==2.15.0
 Plotly
 Pyngrok
 Hyperopt
