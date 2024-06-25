@@ -1,18 +1,15 @@
 import streamlit as st
 import appdirs as ad
-ad.user_cache_dir = lambda *args: "/tmp"
 import yfinance as yf
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import load_model
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error
 import math
 import plotly.graph_objects as go
-import plotly.subplots as sp
 from plotly.subplots import make_subplots
 import datetime
-from datetime import timedelta
 
 # Streamlit app
 def main():
@@ -78,53 +75,29 @@ def main():
     final_model_lstm = load_model("stx_model_lstm.h5")
     final_model_gru = load_model("stx_model_gru.h5")
     
-    final_model_high_lstm = load_model("high_model_lstm.h5")
-    final_model_high_gru = load_model("high_model_gru.h5")
-    
-    final_model_open_lstm = load_model("open_model_lstm.h5")
-    final_model_open_gru = load_model("open_model_gru.h5")
-        
-    final_model_low_lstm = load_model("low_model_lstm.h5")
-    final_model_low_gru = load_model("low_model_gru.h5")
 
     # Model evaluation for LSTM
     y_pred_lstm = final_model_lstm.predict(X_test_lstm)
     y_pred_lstm = scaler_close.inverse_transform(y_pred_lstm)
     
-    b_pred_lstm = final_model_open_lstm.predict(A_test)
-    b_pred_lstm = scaler_open.inverse_transform(b_pred_lstm)
-    
-    d_pred_lstm = final_model_high_lstm.predict(C_test)
-    d_pred_lstm = scaler_high.inverse_transform(d_pred_lstm)
-    
-    q_pred_lstm = final_model_low_lstm.predict(P_test)
-    q_pred_lstm = scaler_low.inverse_transform(q_pred_lstm)
     
     # Model evaluation for GRU
     y_pred_gru = final_model_gru.predict(X_test_gru)
     y_pred_gru = scaler_close.inverse_transform(y_pred_gru)
     
-    b_pred_gru = final_model_open_gru.predict(A_test)
-    b_pred_gru = scaler_open.inverse_transform(b_pred_gru)
-    
-    d_pred_gru = final_model_high_gru.predict(C_test)
-    d_pred_gru = scaler_high.inverse_transform(d_pred_gru)
-    
-    q_pred_gru = final_model_low_gru.predict(P_test)
-    q_pred_gru = scaler_low.inverse_transform(q_pred_gru)
-
-
+    # Denormalize the actual stock prices
+    y_test_denorm = scaler_close.inverse_transform(y_test.reshape(-1, 1))
     
     st.header(f"Results Close Price {stock_symbol} for LSTM and GRU Models")
-    st.write("LSTM - Root Mean Squared Error (RMSE):", round(math.sqrt(mean_squared_error(y_pred_lstm, y_test)), 5))
-    st.write("LSTM - Mean Absolute Error (MAE):", round(np.mean(np.abs(y_pred_lstm - y_test)), 5))
-    st.write("LSTM - Mean Absolute Percentage Error (MAPE):", round(np.mean(np.abs((y_pred_lstm - y_test) / y_test)) * 100, 5))
+    st.write("LSTM - Root Mean Squared Error (RMSE):", round(math.sqrt(mean_squared_error(y_pred_lstm, y_test_denorm)), 5))
+    st.write("LSTM - Mean Absolute Error (MAE):", round(np.mean(np.abs(y_pred_lstm - y_test_denorm)), 5))
+    st.write("LSTM - Mean Absolute Percentage Error (MAPE):", round(np.mean(np.abs((y_pred_lstm - y_test_denorm) / y_test_denorm)) * 100, 5))
         
-    st.write("GRU - Root Mean Squared Error (RMSE):", round(math.sqrt(mean_squared_error(y_pred_gru, y_test)), 5))
-    st.write("GRU - Mean Absolute Error (MAE):", round(np.mean(np.abs(y_pred_gru - y_test)), 5))
-    st.write("GRU - Mean Absolute Percentage Error (MAPE):", round(np.mean(np.abs((y_pred_gru - y_test) / y_test)) * 100, 5))
+    st.write("GRU - Root Mean Squared Error (RMSE):", round(math.sqrt(mean_squared_error(y_pred_gru, y_test_denorm)), 5))
+    st.write("GRU - Mean Absolute Error (MAE):", round(np.mean(np.abs(y_pred_gru - y_test_denorm)), 5))
+    st.write("GRU - Mean Absolute Percentage Error (MAPE):", round(np.mean(np.abs((y_pred_gru - y_test_denorm) / y_test_denorm)) * 100, 5))
         
-    visualize_combined_predictions(data, train_size_close, n_steps, y_test, y_pred_lstm, y_pred_gru, "Close")
+    visualize_combined_predictions(data, train_size_close, n_steps, y_test_denorm, y_pred_lstm, y_pred_gru, "Close")
 
 def prepare_data_close(data, n_steps):
     X, y = [], []
@@ -162,31 +135,38 @@ def prepare_data_low(data, n_steps):
 def visualize_combined_predictions(data, train_size, n_steps, y_test, y_pred_lstm, y_pred_gru, price_type):
     fig = go.Figure()
 
+    # Add training data
     fig.add_trace(go.Scatter(x=data.index[:train_size + n_steps],
                              y=data[price_type][:train_size + n_steps],
                              mode='lines',
                              name="Training Data",
                              line=dict(color='gray')))
 
-    fig.add_trace(go.Scatter(x=data.index[train_size + n_steps:],
+    # Adjust y_test to align correctly with the indices
+    actual_indices = data.index[train_size + n_steps: train_size + n_steps + len(y_test)]
+
+    # Add actual stock prices
+    fig.add_trace(go.Scatter(x=actual_indices,
                              y=y_test.flatten(),
                              mode='lines',
                              name="Actual Stock Prices",
                              line=dict(color='blue')))
 
-    fig.add_trace(go.Scatter(x=data.index[train_size + n_steps:],
+    # Add LSTM predictions
+    fig.add_trace(go.Scatter(x=actual_indices,
                              y=y_pred_lstm.flatten(),
                              mode='lines',
                              name="Predicted Stock Prices (LSTM)",
                              line=dict(color='red')))
 
-    fig.add_trace(go.Scatter(x=data.index[train_size + n_steps:],
+    # Add GRU predictions
+    fig.add_trace(go.Scatter(x=actual_indices,
                              y=y_pred_gru.flatten(),
                              mode='lines',
                              name="Predicted Stock Prices (GRU)",
                              line=dict(color='green')))
 
-    fig.update_layout(title=f"{price_type} Price Prediction",
+    fig.update_layout(title=f"{price_type} Price Prediction for LSTM & GRU",
                       xaxis_title="Date",
                       yaxis_title="Stock Price (USD)",
                       template='plotly_dark')
