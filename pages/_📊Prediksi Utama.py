@@ -445,7 +445,7 @@ def visualize_predictions_close(data, train_size_close, n_steps, y_test_orig, y_
                              name="Predicted Stock Prices",
                              line=dict(color='red')))
 
-    fig_close.update_layout(title="Close Price Prediction",
+    fig_close.update_layout(title="{stock_symbol} Prediction Result of {model_type}",
                       xaxis_title="Date",
                       yaxis_title="Stock Price (USD)",
                       template='plotly_dark')
