@@ -155,7 +155,7 @@ def main():
     
     with CloseTab:
         # Display results
-        st.header(f"Results Close Price for {model_type} Model")
+        st.header(f"Results Close Price {stock_symbol} for {model_type} Model")
         st.write("Root Mean Squared Error (RMSE):", round(rmse_close, 5))
         st.write("Mean Absolute Error (MAE):", round (mad_close, 5))
         st.write("Mean Absolute Percentage Error (MAPE):", round (mape_close, 5)) 
